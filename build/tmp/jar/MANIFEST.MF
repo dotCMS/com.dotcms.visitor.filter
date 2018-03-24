@@ -20,7 +20,7 @@ Bundle-ClassPath:
                     libs/guava-r0
  5.jar
                 
-Bundle-Activator: com.dotmarketing.osgi.Activator
+Bundle-Activator: com.dotcms.osgi.Activator
 Import-Package: 
 					javax.servlet.*,
 					org.osgi.service.http.cont
@@ -31,7 +31,20 @@ Import-Package:
  ting.osgi.*,
 					com.dotmarketing.filters.*,
 					com.dotcms.repacka
- ge.com.maxmind.geoip2.*
+ ge.com.maxmind.geoip2.*,
+					org.apache.catalina.*,
+					com.dotcms.
+ util,
+					java.net,
+					org.apache.tomcat.util.descriptor.web,
+				
+ 	javax.servlet,
+					javax.servlet.annotation,
+					javax.servlet.htt
+ p,
+					org.apache.catalina,org.apache.catalina.core,org.apache.tomca
+ t.util.descriptor.web
+    
 
 				
 DynamicImport-Package: *

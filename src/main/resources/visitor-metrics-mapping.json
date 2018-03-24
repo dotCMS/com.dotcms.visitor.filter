@@ -1,0 +1,29 @@
+{
+	"properties": {
+		"ip": {
+			"type": "ip"
+		},
+		"ts": {
+			"type": "date",
+			"format": "epoch_millis"
+		},
+		"latLong": {
+			"type": "geo_point"
+		},
+		"tags": {
+			"type": "nested",
+			"properties": {
+				"tag": {
+					"type": "text"
+				},
+				"count": {
+					"type": "integer"
+				}
+			}
+		}
+	}
+}
+
+
+
+
