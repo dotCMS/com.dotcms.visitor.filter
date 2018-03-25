@@ -78,7 +78,7 @@ task fragmentJar(type: Jar) {
                     'Bundle-ManifestVersion': "${bundleManifestVersion}",
                     'Bundle-DocURL': "${bundleDocURL}",
                     'Fragment-Host': "${fragmentHost}",
-                    'Export-Package': "${importPackage}"
+                    'Export-Package': "org.apache.tomcat.Container,com.dotcms.util,com.dotcms.repackage.org.apache.commons.net.util,org.apache.tomcat.util.descriptor.web,javax.servlet,javax.servlet.annotation,javax.servlet.http,org.apache.catalina,org.apache.catalina.core,org.apache.tomcat.util.descriptor.web"
             )
         }
     }
@@ -100,13 +100,12 @@ jar {
 					com.dotmarketing.filters.*,
 					com.dotcms.repackage.com.maxmind.geoip2.*,
 					org.apache.catalina.*,
-					com.dotcms.util,
-					java.net,
+					com.dotcms.util.*,
+					java.net.*,
 					org.apache.tomcat.util.descriptor.web,
-					javax.servlet,
-					javax.servlet.annotation,
-					javax.servlet.http,
-					org.apache.catalina,org.apache.catalina.core,org.apache.tomcat.util.descriptor.web
+					javax.servlet.*,
+					org.apache.tomcat.Container,
+					
     
 
 				''',

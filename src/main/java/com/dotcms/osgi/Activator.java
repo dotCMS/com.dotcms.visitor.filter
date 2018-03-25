@@ -14,42 +14,27 @@
  */
 package com.dotcms.osgi;
 
-import org.osgi.framework.BundleContext;
-
-import com.dotcms.osgi.servlet.FilterRegistration;
 import com.dotcms.osgi.servlet.VisitorFilter;
 import com.dotcms.osgi.util.FilterOrder;
 import com.dotcms.osgi.util.TomcatServletFilterUtil;
+
 import com.dotmarketing.osgi.GenericBundleActivator;
+
+import org.osgi.framework.BundleContext;
 
 public final class Activator extends GenericBundleActivator {
 
   final static String FILTER_NAME = "VisitorLoggerFilter";
 
 
-  private FilterRegistration filterReg = new FilterRegistration(new VisitorFilter(), "/");
 
   @Override
   public void start(BundleContext context) throws Exception {
 
 
-    // putting this filter last becuase the CMSFilter does not interact with the back end
-    // urls
     new TomcatServletFilterUtil().addFilter(FILTER_NAME, new VisitorFilter(), FilterOrder.FIRST, "*");
 
 
-    // Initializing services...
-    // initializeServices( context );
-
-    // Registering the ViewTool service
-    // registerViewToolService( context, new VisitorMetricInfo() );
-    /*
-     * final FilterWebInterceptorProvider filterWebInterceptorProvider =
-     * FilterWebInterceptorProvider.getInstance(Config.CONTEXT); final WebInterceptorDelegate delegate =
-     * filterWebInterceptorProvider.getDelegate(AutoLoginFilter.class);
-     * 
-     * delegate.addFirst(filterReg);
-     */
 
   }
 
@@ -57,13 +42,6 @@ public final class Activator extends GenericBundleActivator {
   public void stop(BundleContext context) throws Exception {
 
     new TomcatServletFilterUtil().removeFilter(FILTER_NAME);
-    // unregisterViewToolServices();
-    /*
-     * final FilterWebInterceptorProvider filterWebInterceptorProvider =
-     * FilterWebInterceptorProvider.getInstance(Config.CONTEXT); final WebInterceptorDelegate delegate =
-     * filterWebInterceptorProvider.getDelegate(AutoLoginFilter.class); if (null != delegate) {
-     * delegate.remove(filterReg.getName(), true); }
-     */
 
 
 

@@ -1,11 +1,16 @@
 package com.dotcms.osgi.util;
 
+import com.dotcms.cluster.ClusterUtils;
+import com.dotcms.enterprise.cluster.ClusterFactory;
+import com.dotcms.osgi.servlet.VisitorFilter;
+import com.dotcms.repackage.com.google.common.collect.ImmutableMap;
 import com.dotcms.util.GeoIp2CityDbUtil;
 import com.dotcms.visitor.business.VisitorAPIImpl;
 import com.dotcms.visitor.domain.Visitor;
 import com.dotcms.visitor.domain.Visitor.AccruedTag;
 
 import com.dotmarketing.beans.Identifier;
+import com.dotmarketing.business.APILocator;
 import com.dotmarketing.business.web.WebAPILocator;
 import com.dotmarketing.filters.Constants;
 import com.dotmarketing.portlets.languagesmanager.model.Language;
@@ -14,15 +19,12 @@ import com.dotmarketing.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,8 +39,12 @@ import eu.bitwalker.useragentutils.UserAgent;
 
 public class VisitorLogger {
     
-    static GeoIp2CityDbUtil geo = GeoIp2CityDbUtil.getInstance();
-    static ObjectMapper mapper;
+    private static GeoIp2CityDbUtil geo = GeoIp2CityDbUtil.getInstance();
+    private static final String CLUSTER_ID=ClusterFactory.getClusterId();
+    private static ObjectMapper mapper;
+    private static final boolean GDPR=false;
+    
+    
     private ObjectMapper mapper() {
         if(mapper==null) {
             ObjectMapper newMapper = new ObjectMapper();
@@ -85,12 +91,16 @@ public class VisitorLogger {
         
 
 
-
-        Map<String, String> cookies = Arrays.asList(request.getCookies()).stream().collect(Collectors.toMap(from ->from.getName(),from -> from.getValue()));
+        
+        Map<String, String> cookies = (request.getCookies()!=null) ? Arrays.asList(request.getCookies()).stream().collect(Collectors.toMap(from ->from.getName(),from -> from.getValue())) : ImmutableMap.of();
         map.put("response", response.getStatus());
+        map.put("clusterId", CLUSTER_ID);
         map.put("sessionId", sessionId);
         map.put("ts", System.currentTimeMillis());
-        map.put("ip", request.getRemoteHost());
+        if(!GDPR) {
+            map.put("ip", request.getRemoteHost());
+        }
+        map.put("vanityUrl", request.getAttribute(VisitorFilter.VANITY_URL_ATTRIBUTE));
         map.put("request", request.getRequestURI());
         map.put("query", request.getParameterMap());
         map.put("referer", request.getHeader("referer"));

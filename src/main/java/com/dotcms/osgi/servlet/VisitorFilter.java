@@ -1,7 +1,23 @@
 
 package com.dotcms.osgi.servlet;
 
+import com.dotcms.osgi.util.VisitorLogger;
+import com.dotcms.repackage.com.google.common.annotations.VisibleForTesting;
+import com.dotcms.vanityurl.handler.VanityUrlHandlerResolver;
+import com.dotcms.vanityurl.model.CachedVanityUrl;
+
+import com.dotmarketing.beans.Host;
+import com.dotmarketing.business.APILocator;
+import com.dotmarketing.business.web.HostWebAPI;
+import com.dotmarketing.business.web.LanguageWebAPI;
+import com.dotmarketing.business.web.UserWebAPI;
+import com.dotmarketing.business.web.WebAPILocator;
+import com.dotmarketing.exception.DotDataException;
+import com.dotmarketing.exception.DotSecurityException;
+import com.dotmarketing.filters.CMSUrlUtil;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,12 +28,40 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dotcms.osgi.util.VisitorLogger;
+import org.pmw.tinylog.Logger;
+
+import com.liferay.portal.PortalException;
+import com.liferay.portal.SystemException;
 
 public class VisitorFilter implements Filter {
-  
 
-    VisitorLogger logger=new VisitorLogger();
+    private final VanityUrlHandlerResolver vanityUrlHandlerResolver;
+    private final CMSUrlUtil urlUtil;
+    private final HostWebAPI hostWebAPI;
+    private final LanguageWebAPI languageWebAPI;
+    private final UserWebAPI userWebAPI;
+    private static final String CMS_HOME_PAGE = "/cmsHomePage";
+    public static final String VANITY_URL_ATTRIBUTE="VANITY_URL_ATTRIBUTE";
+    
+    public VisitorFilter() {
+
+        this(VanityUrlHandlerResolver.getInstance(), CMSUrlUtil.getInstance(), WebAPILocator.getHostWebAPI(),
+                WebAPILocator.getLanguageWebAPI(), WebAPILocator.getUserWebAPI());
+    }
+
+    @VisibleForTesting
+    protected VisitorFilter(final VanityUrlHandlerResolver vanityUrlHandlerResolver, final CMSUrlUtil urlUtil,
+            final HostWebAPI hostWebAPI, final LanguageWebAPI languageWebAPI, final UserWebAPI userWebAPI) {
+
+        this.vanityUrlHandlerResolver = vanityUrlHandlerResolver;
+        this.urlUtil = urlUtil;
+        this.hostWebAPI = hostWebAPI;
+        this.languageWebAPI = languageWebAPI;
+        this.userWebAPI = userWebAPI;
+    }
+
+    VisitorLogger logger = new VisitorLogger();
+
     public void init(FilterConfig config) throws ServletException {
         System.out.println("visitor logger started:");
 
@@ -26,23 +70,17 @@ public class VisitorFilter implements Filter {
 
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
             throws IOException, ServletException {
-      
-      
-      
-        chain.doFilter(req, res);
-      
-      
+
         final HttpServletRequest request = (HttpServletRequest) req;
-
         final HttpServletResponse response = (HttpServletResponse) res;
-
-        
-        
-        
-        
-        
-        logger.log(request, response);
-
+        try {
+            chain.doFilter(req, res);
+            setVanityAsAttribute(request);
+            logger.log(request, response);
+        } catch (Exception e) {
+            Logger.error(e);
+            return;
+        }
     }
 
     public void destroy() {
@@ -50,8 +88,26 @@ public class VisitorFilter implements Filter {
     }
 
 
-
-
+    private void setVanityAsAttribute(HttpServletRequest request)
+            throws UnsupportedEncodingException, DotDataException, PortalException, SystemException, DotSecurityException {
+        // Get the URI from the request and check for possible XSS hacks
+        final String uri = this.urlUtil.getURIFromRequest(request);
+        if (this.urlUtil.isVanityUrlFiltered(uri)) {
+            return;
+        }
+        // Getting the site form the request
+        Host host = WebAPILocator.getHostWebAPI().getCurrentHost(request);
+        final long languageId = this.languageWebAPI.getLanguage(request).getId();
+        if (this.urlUtil.isVanityUrl(uri, host, languageId)) {
+            CachedVanityUrl vanityUrl = APILocator.getVanityUrlAPI().getLiveCachedVanityUrl(
+                    ("/".equals(uri) ? CMS_HOME_PAGE : uri.endsWith("/") ? uri.substring(0, uri.length() - 1) : uri), host,
+                    languageId, this.userWebAPI.getUser(request));
+            
+            request.setAttribute(VANITY_URL_ATTRIBUTE, vanityUrl.getVanityUrlId());
+            
+            
+        }
+    }
 
 
 

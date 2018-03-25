@@ -34,18 +34,16 @@ Import-Package:
  ge.com.maxmind.geoip2.*,
 					org.apache.catalina.*,
 					com.dotcms.
- util,
-					java.net,
+ util.*,
+					java.net.*,
 					org.apache.tomcat.util.descriptor.web,
-				
- 	javax.servlet,
-					javax.servlet.annotation,
-					javax.servlet.htt
- p,
-					org.apache.catalina,org.apache.catalina.core,org.apache.tomca
- t.util.descriptor.web
+
+ 					javax.servlet.*,
+					org.apache.tomcat.Container,
+					
     
 
-				
+	
+ 			
 DynamicImport-Package: *
 
