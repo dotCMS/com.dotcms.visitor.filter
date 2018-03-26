@@ -2,18 +2,13 @@
 README
 ------
 
-This bundle plugin is an example of how to use services provide by other bundles and
- how to register servlets and filters.
+This bundle plugin provides a filter that logs information regarding a site visitor.  It requires that the user is running under the Tomcat app server.
+
 
 How to build this example
 -------------------------
 
-Note: As you can see, this plugin depends on com.dotcms.service example.
-It will use com.dotmarketing.osgi.service.HelloWorld.
-
-In order to compile this plugin without error you need to run first under com.dotcms.service example:
-./gradlew jar
-
+To build this, run  `./gradlew jar`.  This will create two jars, both of which you should upload into your dotCMS.
 
 
 
