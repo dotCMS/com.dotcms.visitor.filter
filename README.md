@@ -55,16 +55,22 @@ To build this, run  `./gradlew jar`.  This will create two jars, both of which y
 	"lang": "en-us",
 	"dmid": "9c7f36cd-52b0-4f12-b404-237c66834ec3",
 	"latLong": "42.6489,-71.1655",
-	"tags": [{
-		"tag": "documentation",
-		"count": 2
-	}, {
-		"tag": "toc",
-		"count": 2
-	}, {
-		"tag": "table of contents",
-		"count": 2
-	}],
+	"tags": [{"tag":"globalinvestor", "count":6}
+		{"tag":"china", "count":4}
+		{"tag":"europe", "count":3}
+		{"tag":"housing", "count":2}
+		{"tag":"asia", "count":2}
+		{"tag":"retirement", "count":2}
+		{"tag":"home prices", "count":2}
+		{"tag":"pension", "count":2}
+		{"tag":"retiree", "count":2}
+		{"tag":"wealthyprospect", "count":2}
+		{"tag":"estate planning", "count":1}
+		{"tag":"research", "count":1}
+		{"tag":"social security", "count":1}
+		{"tag":"yield", "count":1}
+		{"tag":"annuities", "count":1}
+		{"tag":"medicare", "count":1}],
 	"params": {},
 	"pagesViewed": 4
 }
