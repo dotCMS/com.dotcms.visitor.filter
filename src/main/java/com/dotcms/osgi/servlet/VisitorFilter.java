@@ -1,7 +1,7 @@
 
 package com.dotcms.osgi.servlet;
 
-import com.dotcms.osgi.util.VisitorLogger;
+import com.dotcms.osgi.logger.VisitorLogger;
 import com.dotcms.repackage.com.google.common.annotations.VisibleForTesting;
 import com.dotcms.vanityurl.handler.VanityUrlHandlerResolver;
 import com.dotcms.vanityurl.model.CachedVanityUrl;
@@ -30,21 +30,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.pmw.tinylog.Logger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.liferay.portal.PortalException;
 import com.liferay.portal.SystemException;
 
 public class VisitorFilter implements Filter {
 
-    private final VanityUrlHandlerResolver vanityUrlHandlerResolver;
+
     private final CMSUrlUtil urlUtil;
-    private final HostWebAPI hostWebAPI;
+
     private final LanguageWebAPI languageWebAPI;
     private final UserWebAPI userWebAPI;
-    private static final String CMS_HOME_PAGE = "/cmsHomePage";
-    public static final String VANITY_URL_ATTRIBUTE="VANITY_URL_ATTRIBUTE";
+    private final static String CMS_HOME_PAGE = "/cmsHomePage";
+    public  final static  String VANITY_URL_ATTRIBUTE="VANITY_URL_ATTRIBUTE";
+    private final VisitorLogger logImpl;
+    
+    
     
     public VisitorFilter() {
-
         this(VanityUrlHandlerResolver.getInstance(), CMSUrlUtil.getInstance(), WebAPILocator.getHostWebAPI(),
                 WebAPILocator.getLanguageWebAPI(), WebAPILocator.getUserWebAPI());
     }
@@ -53,19 +56,25 @@ public class VisitorFilter implements Filter {
     protected VisitorFilter(final VanityUrlHandlerResolver vanityUrlHandlerResolver, final CMSUrlUtil urlUtil,
             final HostWebAPI hostWebAPI, final LanguageWebAPI languageWebAPI, final UserWebAPI userWebAPI) {
 
-        this.vanityUrlHandlerResolver = vanityUrlHandlerResolver;
+        
+        this.logImpl = new VisitorLogger() {
+            @Override
+            public void log(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+                System.out.println("VisitorLogger Started");
+                
+            }
+        }.getVisitorLoggerImpl();
+        
+        
         this.urlUtil = urlUtil;
-        this.hostWebAPI = hostWebAPI;
         this.languageWebAPI = languageWebAPI;
         this.userWebAPI = userWebAPI;
     }
 
-    VisitorLogger logger = new VisitorLogger();
+
 
     public void init(FilterConfig config) throws ServletException {
-        System.out.println("visitor logger started:");
-
-
+        System.out.println("VisitorLogger Filter Started");
     }
 
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
@@ -76,7 +85,7 @@ public class VisitorFilter implements Filter {
         try {
             chain.doFilter(req, res);
             setVanityAsAttribute(request);
-            logger.log(request, response);
+            logImpl.log(request, response);
         } catch (Exception e) {
             Logger.error(e);
             return;
@@ -84,7 +93,7 @@ public class VisitorFilter implements Filter {
     }
 
     public void destroy() {
-        System.out.println("visitor logger stopped");
+        System.out.println("VisitorLogger Filter Destroyed");
     }
 
 

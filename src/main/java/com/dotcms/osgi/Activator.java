@@ -24,26 +24,24 @@ import org.osgi.framework.BundleContext;
 
 public final class Activator extends GenericBundleActivator {
 
-  final static String FILTER_NAME = "VisitorLoggerFilter";
+    final static String FILTER_NAME = "VisitorLoggerFilter";
 
 
 
-  @Override
-  public void start(BundleContext context) throws Exception {
+    @Override
+    public void start(BundleContext context) throws Exception {
+
+        new TomcatServletFilterUtil().addFilter(FILTER_NAME, new VisitorFilter(), FilterOrder.FIRST, "*");
 
 
-    new TomcatServletFilterUtil().addFilter(FILTER_NAME, new VisitorFilter(), FilterOrder.FIRST, "*");
+    }
 
+    @Override
+    public void stop(BundleContext context) throws Exception {
 
-
-  }
-
-  @Override
-  public void stop(BundleContext context) throws Exception {
-
-    new TomcatServletFilterUtil().removeFilter(FILTER_NAME);
+        new TomcatServletFilterUtil().removeFilter(FILTER_NAME);
 
 
 
-  }
+    }
 }
