@@ -12,6 +12,7 @@ import com.dotmarketing.business.web.HostWebAPI;
 import com.dotmarketing.business.web.LanguageWebAPI;
 import com.dotmarketing.business.web.UserWebAPI;
 import com.dotmarketing.business.web.WebAPILocator;
+import com.dotmarketing.db.DbConnectionFactory;
 import com.dotmarketing.exception.DotDataException;
 import com.dotmarketing.exception.DotSecurityException;
 import com.dotmarketing.filters.CMSUrlUtil;
@@ -28,8 +29,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.pmw.tinylog.Logger;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.liferay.portal.PortalException;
 import com.liferay.portal.SystemException;
@@ -43,6 +42,7 @@ public class VisitorFilter implements Filter {
     private final UserWebAPI userWebAPI;
     private final static String CMS_HOME_PAGE = "/cmsHomePage";
     public  final static  String VANITY_URL_ATTRIBUTE="VANITY_URL_ATTRIBUTE";
+    public  final static  String DOTPAGE_PROCESSING_TIME="DOTPAGE_PROCESSING_TIME";
     private final VisitorLogger logImpl;
     
     
@@ -80,15 +80,24 @@ public class VisitorFilter implements Filter {
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
             throws IOException, ServletException {
 
+        final boolean isNewConnection = !DbConnectionFactory.connectionExists();
         final HttpServletRequest request = (HttpServletRequest) req;
         final HttpServletResponse response = (HttpServletResponse) res;
         try {
+            long startTime = System.currentTimeMillis();
             chain.doFilter(req, res);
             setVanityAsAttribute(request);
+            request.setAttribute(DOTPAGE_PROCESSING_TIME, System.currentTimeMillis()-startTime);
             logImpl.log(request, response);
         } catch (Exception e) {
-            Logger.error(e);
+            
+            e.printStackTrace();
             return;
+        }
+        finally {
+            if(isNewConnection) {
+                DbConnectionFactory.closeSilently();
+            }
         }
     }
 
