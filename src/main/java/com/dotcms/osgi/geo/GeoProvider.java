@@ -20,7 +20,7 @@ public class GeoProvider implements GeoLocationProvider {
 
 
     if (visitor.get(VISITOR_PLUGIN_GEOLOCATION) != null && visitor.get(VISITOR_PLUGIN_GEOLOCATION) instanceof Map) {
-      return (Map<String, String>) visitor.get(VISITOR_PLUGIN_GEOLOCATION);
+     // return (Map<String, String>) visitor.get(VISITOR_PLUGIN_GEOLOCATION);
     }
 
     final String ip = visitor.getIpAddress().getHostAddress();

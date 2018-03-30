@@ -1,5 +1,10 @@
 package com.dotcms.osgi.geo;
 
+import com.dotcms.osgi.util.BundleConfigProperties;
+
+import com.dotmarketing.exception.DotRuntimeException;
+import com.dotmarketing.util.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,19 +17,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import com.dotcms.osgi.util.BundleConfigProperties;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
-
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
-import com.maxmind.geoip2.model.DomainResponse;
 import com.maxmind.geoip2.record.City;
 import com.maxmind.geoip2.record.Country;
 import com.maxmind.geoip2.record.Location;
 import com.maxmind.geoip2.record.Subdivision;
-import com.dotmarketing.exception.DotRuntimeException;
-import com.dotmarketing.util.Logger;
 
 public class GeoIp2CityDbUtil {
 
@@ -115,9 +115,9 @@ public class GeoIp2CityDbUtil {
 
   public String getCompany() throws UnknownHostException, IOException, GeoIp2Exception {
 
-    DomainResponse res = GeoIp2CityDbUtil.reader.domain(inetAddress);
-    return res.getDomain();
-
+    //DomainResponse res = GeoIp2CityDbUtil.reader.domain(inetAddress);
+    //return res.getDomain();
+      return "ukn";
   }
 
   /**
