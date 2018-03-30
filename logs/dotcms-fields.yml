@@ -1,0 +1,175 @@
+
+- key: beat
+  title: Beat
+  description: >
+    Contains common beat fields available in all event types.
+  fields:
+
+    - name: beat.name
+      description: >
+        The name of the Beat sending the log messages. If the Beat name is
+        set in the configuration file, then that value is used. If it is not
+        set, the hostname is used. To set the Beat name, use the `name`
+        option in the configuration file.
+    - name: beat.hostname
+      description: >
+        The hostname as returned by the operating system on which the Beat is
+        running.
+    - name: beat.timezone
+      description: >
+        The timezone as returned by the operating system on which the Beat is
+        running.
+    - name: beat.version
+      description: >
+        The version of the beat that generated this event.
+
+    - name: "@timestamp"
+      type: date
+      required: true
+      format: date
+      example: August 26th 2016, 12:35:53.332
+      description: >
+        The timestamp when the event log record was generated.
+
+    - name: tags
+      description: >
+        Arbitrary tags that can be set per Beat and per transaction
+        type.
+
+    - name: fields
+      type: object
+      object_type: keyword
+      description: >
+        Contains user configurable fields.
+
+    - name: error
+      type: group
+      description: >
+        Error fields containing additional info in case of errors.
+      fields:
+        - name: message
+          type: text
+          description: >
+            Error message.
+        - name: code
+          type: long
+          description: >
+            Error code.
+        - name: type
+          type: keyword
+          description: >
+            Error type.
+            
+- key: dotcms
+  title: dotCMS Visitor Logging
+  description: >
+    Logging from dotCMS Visitor Log Plugin
+    {"id":"235ef860-2587-4fd1-befc-c8d23a509224","status":200,"iAm":"PAGE","uri":"/index.dot","ms":60,"cluster":"1d010733d3",
+    "server":"1e72e6fcb5","session":"9E09D479CB53A403A5B07E71C8D25FA3","sessionNew":true,
+    "time":1522437391227,"mime":"text/html;charset=UTF-8","vanityUrl":null,"referer":null,
+    "host":"dotcms.com","assetId":"8569f998-176b-48e1-bcc8-833ca673f813","contentId":null,"lang":"en-us",
+    "ipHash":"6499ced4e8fb58602aaa23084975daa22d7d18b0","dmid":"e0d55291-2d8c-4ea4-9006-6cd21efdf069",
+    "device":"UNKNOWN","weightedTags":[],"persona":null,"pagesViewed":1,
+    "agent":{"operatingSystem":"UNKNOWN","browser":"DOWNLOAD","id":16843024,"browserVersion":null},"g.ip":"ukn",
+    "h.host":"dotcms.com","h.user-agent":"curl/7.54.0","queryString":null,"rulesRequest":"","rulesSession":"","ip":"207.225.224.142","userId":null}
+
+  fields:
+
+    - name: id
+      example: 235ef860-2587-4fd1-befc-c8d23a509224
+      description: >
+        UUID of log entry
+        
+    - name: time
+      type: date
+      required: true
+      format: epoch_millis
+      example: 1522437391227
+      description: >
+        The timestamp when the event log record was generated.
+        
+    - name: status
+      type: long
+      description: >
+        The HTTP response code.
+        
+    - name: cluster
+      description: >
+        Instance ID of the host cluster.
+        
+    - name: server
+      description: >
+        Instance ID of the host server.
+
+    -   name: iAm
+        type: keyword
+        description: >
+            Type of asset requested
+
+    - name: uri
+      example: /index.dot
+      description: >
+        page or file requested
+
+    - name: ms
+      type: long
+      description: >
+        Time it took for the response in ms
+
+        
+    -   name: session
+        type: keyword
+        example: 9E09D479CB53A403A5B07E71C8D25FA3
+        description: >
+            session id
+
+    -   name: sessionNew
+        example: true
+        type: boolean
+        description: >
+            first hit of a session
+
+    -   name: mime
+        example: text/html;charset=UTF-8
+        description: >
+            mimeType of the response
+        
+
+    -   name: vanityUrl
+        example: 235ef860-2587-4fd1-befc-c8d23a509224
+        description: >
+            uuid of the vanity url hit
+        
+    -   name: referer
+        example: https://google.com/?q=best+cms
+        description: >
+            the referer header of the request
+        
+    -   name: host
+        example: dotcms.com
+        description: >
+            host header
+        
+    -   name: assetId
+        type: keyword
+        description: >
+            UUID of the page or file being served
+    
+    -   name: contentId
+        type: keyword
+        description: >
+            UUID of the URLMapped content being served
+    
+    -   name: lang
+        example: en-us
+        description: >
+            language of the page
+    
+    -   name: g.latLong
+        type: geo_point
+        example: 32.0303,-81.1644
+        description: >
+            geopoint  
+
+
+ 

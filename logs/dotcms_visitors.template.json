@@ -1,0 +1,16 @@
+{
+	"properties": {
+		"ip": {
+			"type": "ip"
+		},
+		"time": {
+			"type": "date",
+			"format": "epoch_millis"
+		}
+
+	}
+}
+
+
+
+
