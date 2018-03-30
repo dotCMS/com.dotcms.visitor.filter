@@ -45,7 +45,7 @@ public class BundleConfigProperties {
     }
     
     public static String getProperty(String key) {
-        return properties.getProperty(key);
+        return getProperty(key, null);
     }
 
     public static boolean getBooleanProperty(String key, boolean defaultValue) {
