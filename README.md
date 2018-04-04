@@ -14,64 +14,47 @@ To build this, run  `./gradlew jar`.  This will create two jars, both of which y
 
 ```
 {
-	"response": 200,
-	"clusterId": "1d010733-d391-4290-a4ce-c941295057dc",
-	"sessionId": "5C6D6F3EF2F55D131DEEB5A49D2CE5A4",
-	"ts": 1521938081967,
-	"ip": "98.110.173.156",
+	"id": "d7da6ae2-4453-44a0-b365-ae5750263ea3",
+	"status": 200,
+	"iAm": "PAGE",
+	"uri": "/index.dot",
+	"ms": 37,
+	"cluster": "1d010733d3",
+	"server": "1e72e6fcb5",
+	"session": "7C6E78FEDC321CE3BD247AFFDC95A404",
+	"sessionNew": false,
+	"time": 1522447806684,
+	"mime": "text/html;charset=UTF-8",
 	"vanityUrl": null,
-	"request": "/contentAsset/image/335fc571-5d31-46e3-8f8a-d0c2b8fa7e15/banner/filter/Jpeg/jpeg_q/50/Resize/resize_w/1200/cloud%20computer.png",
-	"query": {},
-	"referer": "https://dotcms.com/",
+	"referer": null,
 	"host": "dotcms.com",
-	"assetId": "unk",
-	"contentId": "unk",
+	"assetId": "8569f998-176b-48e1-bcc8-833ca673f813",
+	"contentId": null,
+	"lang": "en-us",
+	"ipHash": "cc1b829ae72692c9f241cf6a57b53a82f70a73a2",
+	"dmid": "191f3d20-80f9-48af-92ef-b02634121920",
 	"device": "COMPUTER",
+	"weightedTags": [],
+	"persona": null,
+	"pagesViewed": 1,
 	"agent": {
-		"operatingSystem": "MAC_OS_X",
-		"browser": "CHROME",
-		"id": 50990849,
+		"operatingSystem": "WINDOWS_7",
+		"browser": "FIREFOX40",
+		"id": 34933977,
 		"browserVersion": {
-			"version": "65.0.3325.162",
-			"majorVersion": "65",
-			"minorVersion": "0"
+			"version": "40.1",
+			"majorVersion": "40",
+			"minorVersion": "1"
 		}
 	},
-	"userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36",
-	"cookies": {
-		"__utmz": "1.1521937960.1.1.utmcsr",
-		"__utmt": "1",
-		"sitevisitscookie": "1",
-		"__utmb": "1.2.10.1521937960",
-		"opvc": "65590616-b903-4efa-8b43-48d12bbd0d12",
-		"JSESSIONID": "5C6D6F3EF2F55D131DEEB5A49D2CE5A4",
-		"__utmc": "1",
-		"dmid": "9c7f36cd-52b0-4f12-b404-237c66834ec3",
-		"__utma": "1.645710694.1521937960.1521937960.1521937960.1"
-	},
-	"persona": "unk",
-	"city": "Andover",
-	"country": "US",
-	"lang": "en-us",
-	"dmid": "9c7f36cd-52b0-4f12-b404-237c66834ec3",
-	"latLong": "42.6489,-71.1655",
-	"tags": [{"tag":"globalinvestor", "count":6}
-		{"tag":"china", "count":4}
-		{"tag":"europe", "count":3}
-		{"tag":"housing", "count":2}
-		{"tag":"asia", "count":2}
-		{"tag":"retirement", "count":2}
-		{"tag":"home prices", "count":2}
-		{"tag":"pension", "count":2}
-		{"tag":"retiree", "count":2}
-		{"tag":"wealthyprospect", "count":2}
-		{"tag":"estate planning", "count":1}
-		{"tag":"research", "count":1}
-		{"tag":"social security", "count":1}
-		{"tag":"yield", "count":1}
-		{"tag":"annuities", "count":1}
-		{"tag":"medicare", "count":1}],
-	"params": {},
-	"pagesViewed": 4
+	"g.ip": "ukn",
+	"h.host": "dotcms.com",
+	"h.user-agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1",
+	"queryString": null,
+	"rulesRequest": "",
+	"rulesSession": "",
+	"ip": "178.209.29.187",
+	"c.dmid": "191f3d20-80f9-48af-92ef-b02634121920",
+	"userId": null
 }
 ```
