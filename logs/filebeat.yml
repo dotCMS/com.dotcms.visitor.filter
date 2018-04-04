@@ -47,6 +47,7 @@ setup.template.settings:
     #_source.enabled: false
 setup.template.overwrite: true
 setup.template.name: "dotcms"
+setup.template.pattern: "dotcms-*"
 setup.template.fields: "./dotcms-fields.yml"
 #================================ General =====================================
 
@@ -109,7 +110,7 @@ setup.kibana:
 output.elasticsearch:
   # Array of hosts to connect to.
     hosts: ["localhost:9200"]
-
+    index: "dotcms-visitors-%{+yyyy.MM}"
     template: "dotcms_visitors.template.json"
 
 #----------------------------- Logstash output --------------------------------
