@@ -1,8 +1,0 @@
-Copy down the generated password for the elastic user and keep it somewhere safe. We can show you this password only once. If you lose the password, you need to reset it on the security page.
-
-Username	elastic
-Password	fDaUTI4SGAhpOwZJPLbSoABO
-Cloud ID	063a28:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJDA2M2EyODQ5MzgzOWEwNjA1ODEyODIzMWQ3ZWNhOTliJGFhM2RjZmI0Njc5ZWFiMTNmMzIwZTNiNDZiNzQ3Nzc3
-
-Copy
-Get started with Beats and Logstash quickly. The Cloud ID simplifies sending data to your cluster on Elastic Cloud. Learn more …
