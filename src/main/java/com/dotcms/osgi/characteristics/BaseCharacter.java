@@ -17,11 +17,8 @@ import com.dotmarketing.filters.Constants;
 import com.dotmarketing.portlets.languagesmanager.model.Language;
 import com.dotmarketing.util.WebKeys;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
